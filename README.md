@@ -122,6 +122,8 @@ source("Real Applications Figure 6.R")
 figure6
 ```
 
+<img src="figure/Figure 6.png" style="display: block; margin: auto;" />
+
 ## Section 6
 
 To generate pseudo outputs, imputer.R needs to be loaded.
