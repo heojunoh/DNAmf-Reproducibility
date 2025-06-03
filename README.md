@@ -59,6 +59,7 @@ library(matlabr)
 library(ggplot2)
 library(ggpubr)
 library(hrbrthemes)
+install.packages("MuFiMeshGP.AL_1.0.tar.gz", repos = NULL, type = "source") # additional package for comparison
 
 source("GP.R")
 source("GP_nonsep.R")
