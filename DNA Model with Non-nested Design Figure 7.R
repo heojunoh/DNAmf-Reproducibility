@@ -9,7 +9,7 @@ fl <- function(x, t){
 n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1;
 m1 <- 2.5; m2 <- 2; m3 <- 1.5; m4 <- 1; m5 <- 0.5; 
 
-set.seed(2) # 4, 23
+set.seed(4) 
 N <- n1+n2+n3+n4+n5
 X_star <- matrix(seq(0,1,length=N),ncol=1)
 idx <- sample(1:N, n1, replace = FALSE)
@@ -34,21 +34,21 @@ y5 <- fl(X5, t=m5)
 
 fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=50, constant=TRUE)
+                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
 X_list_2 <- fit.DNAmf.sqex$XX$X_tilde
 y_list_2 <- fit.DNAmf.sqex$yy$y_tilde
 
 
 fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=50, constant=TRUE)
+                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
 X_list_3 <- fit.DNAmf.sqex$XX$X_tilde
 y_list_3 <- fit.DNAmf.sqex$yy$y_tilde
 
 
 fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=50, constant=TRUE)
+                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
 X_list_5 <- fit.DNAmf.sqex$XX$X_tilde
 y_list_5 <- fit.DNAmf.sqex$yy$y_tilde
 
