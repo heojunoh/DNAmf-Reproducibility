@@ -50,6 +50,7 @@ FEM <- TRUE # do you want to run FEM
 ##### Step 0.2: load functions and packages
 
 ``` r
+install.packages("MuFiMeshGP.AL_1.0.tar.gz", repos = NULL, type = "source") # additional package for comparison
 library(lhs)
 library(plgp)
 library(MuFiCokriging)
@@ -59,7 +60,6 @@ library(matlabr)
 library(ggplot2)
 library(ggpubr)
 library(hrbrthemes)
-install.packages("MuFiMeshGP.AL_1.0.tar.gz", repos = NULL, type = "source") # additional package for comparison
 
 source("GP.R")
 source("GP_nonsep.R")
