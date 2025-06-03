@@ -39,8 +39,8 @@ y5 <- fl(X5, t=m5)
 ### DNAmf ###
 fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=50, constant=TRUE)
-pred.DNAmf <- predict.DNAmf(fit.DNAmf.sqex, x, targett=0, nimpute=50)
+                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
+pred.DNAmf <- predict.DNAmf(fit.DNAmf.sqex, x, targett=0, nimpute=100)
 predydiffu.sqex <- pred.DNAmf$mu
 predsig2diffu.sqex <- pred.DNAmf$sig2
 
