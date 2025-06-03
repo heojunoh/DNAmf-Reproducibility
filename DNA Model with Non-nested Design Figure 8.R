@@ -74,7 +74,7 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
   
   if (add_points && !is.null(X_points) && !is.null(y_points)) {
     data_points <- data.frame(x = X_points, y = y_points, group = factor(i))
-    p <- p + geom_point(data = data_points, aes(x = x, y = y), color = "red", shape = 16, size = 2.1)
+    p <- p + geom_point(data = data_points, aes(x = x, y = y), color = "red", shape = 16, size = 3)
   }
   
   return(p)
