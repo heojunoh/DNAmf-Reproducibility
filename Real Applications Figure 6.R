@@ -2,7 +2,7 @@
 model <- c(rep("DNAmf",100),rep("BM",100),rep("FBM",100))
 model <- factor(model, levels=c("DNAmf", "BM", "FBM"))
 
-df.poisson.rmse <- c(result.poisson.rmse[,1], result.poisson.rmse[,5], result.poisson.rmse[,4])
+df.poisson.rmse <- c(result.poisson.rmse[,1], result.poisson.rmse[,3], result.poisson.rmse[,2])
 
 ppoisson <- ggplot(data.frame(df.poisson.rmse, model), aes(x=model, y=df.poisson.rmse, fill=model)) + 
   geom_boxplot(alpha=0.5) + theme_bw() + ggtitle("Poisson") + labs(x="", y = "RMSE") +
@@ -33,7 +33,7 @@ pheat <- ggplot(data.frame(df.heat.rmse, model), aes(x=model, y=df.heat.rmse, fi
 
 ### Real Applications CRPS ###
 
-df.poisson.crps <- c(result.poisson.crps[,1], result.poisson.crps[,5], result.poisson.crps[,4])
+df.poisson.crps <- c(result.poisson.crps[,1], result.poisson.crps[,3], result.poisson.crps[,2])
 
 ppoisson2 <- ggplot(data.frame(df.poisson.crps, model), aes(x=model, y=df.poisson.crps, fill=model)) + 
   geom_boxplot(alpha=0.5) + theme_bw() + labs(x="", y = "CRPS") +

@@ -98,16 +98,16 @@ for(i in 1:rep) {
     
     ### RMSE ###
     result.poisson.rmse[i,1] <- sqrt(mean((predydiffu.sqex-y.test)^2)) #
-    result.poisson.rmse[i,4] <- sqrt(mean((predyfbm-y.test)^2)) #
-    result.poisson.rmse[i,5] <- sqrt(mean((predybm-y.test)^2)) #
+    result.poisson.rmse[i,2] <- sqrt(mean((predyfbm-y.test)^2)) #
+    result.poisson.rmse[i,3] <- sqrt(mean((predybm-y.test)^2)) #
     
     result.poisson.crps[i,1] <- mean(crps(y.test, predydiffu.sqex, predsig2diffu.sqex)) #
-    result.poisson.crps[i,4] <- mean(crps(y.test, predyfbm, predsig2fbm)) #
-    result.poisson.crps[i,5] <- mean(crps(y.test, predybm, predsig2bm)) #
+    result.poisson.crps[i,2] <- mean(crps(y.test, predyfbm, predsig2fbm)) #
+    result.poisson.crps[i,3] <- mean(crps(y.test, predybm, predsig2bm)) #
     
     result.poisson.comptime[i,1] <- toc.DNAmf.sqex-tic.DNAmf.sqex
-    result.poisson.comptime[i,4] <- toc.fbm-tic.fbm
-    result.poisson.comptime[i,5] <- toc.bm-tic.bm
+    result.poisson.comptime[i,2] <- toc.fbm-tic.fbm
+    result.poisson.comptime[i,3] <- toc.bm-tic.bm
   }, error=function(e){})
   
   boxplot(result.poisson.rmse[1:i,,drop=FALSE])

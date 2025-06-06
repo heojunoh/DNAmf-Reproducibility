@@ -5,11 +5,10 @@ fl <- function(x, t){
   term1 + term2
 }
 ### training data ###
-# n1 <- 18; n2 <- 14; n3 <- 11; n4 <- 8; n5 <- 5; 
 n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1;
 m1 <- 2.5; m2 <- 2; m3 <- 1.5; m4 <- 1; m5 <- 0.5; 
 
-set.seed(4) 
+set.seed(4) # 4, 23
 N <- n1+n2+n3+n4+n5
 X_star <- matrix(seq(0,1,length=N),ncol=1)
 idx <- sample(1:N, n1, replace = FALSE)
@@ -109,7 +108,7 @@ make_panel <- function(i, show_legend = FALSE) {
   
   ggplot() +
     geom_point(data = pts, aes(x = x, y = y, color = type, shape = type), size = 3, stroke = 0.8) +
-    geom_line(data = curve, aes(x = x, y = y), size = 1, linetype = "dashed", color = "black") +
+    geom_line(data = curve, aes(x = x, y = y), linewidth = 1, linetype = "dashed", color = "black") +
     scale_color_manual(values = c(
       "Original" = "red",
       "Iteration 1" = "green",

@@ -75,14 +75,14 @@ DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = 
     param_mat <- matrix(NA, nrow=n.param, ncol=d+6) # theta_x, theta_y, theta_t, beta, delta, mu.hat, tau.hat
     
     ### Draw initial y tilde ###
-    ### sample initial y1_tilde from the imputer ###
+    ### sample initial y1_tilde from the posterior ###
     fit1 <- GP(XX$X_list[[1]], y_all[[1]], g = g, constant = TRUE, init = NULL)
     pred1 <- pred.GP(fit1, XX$X_tilde[[1]], cov.out = TRUE) 
     yy$y_tilde[[1]] <- pred1$mu
     yy$y_star[[1]] <- rbind(yy$y_list[[1]],yy$y_tilde[[1]])
     
     ### sample initial y_2_tilde using individual GPs ###
-    fit2 <- GP.nonsep.sqex(X = do.call(rbind,XX$X_list[-1]), y = do.call(rbind,yy$y_list[-1]), t = do.call(c,t_list[-1]), constant = TRUE)
+    fit2 <- GP.nonsep.sqex(X = do.call(rbind,XX$X_list[-1]), y = do.call(rbind,yy$y_list[-1]), t = do.call(c,t_list[-1]), constant = TRUE, ...)
     for (l in 2:(L-1)) {
       pred2 <- pred.GP.nonsep(fit2, XX$X_tilde[[l]], rep(t[l], nrow(XX$X_tilde[[l]])))
       yy$y_tilde[[l]] <- pred2$mu
@@ -95,7 +95,7 @@ DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = 
                             X=do.call(rbind, XX$X_star[-1]),
                             y=do.call(rbind, yy$y_star[-1]),
                             nn=unlist(lapply(yy$y_star, length)), t=t, fitGP1=FALSE,
-                            constant=constant, init = NULL, multi.start=10)
+                            constant=constant, init = NULL, multi.start=10, ...)
     fit2 <- fit.DNAmf$fit2
     print(c(fit2$theta_x, fit2$theta_t, fit2$beta, fit2$delta, fit2$mu.hat, fit2$tau2hat))
     
@@ -111,7 +111,7 @@ DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = 
                               X=do.call(rbind, XX$X_star[-1]),
                               y=do.call(rbind, yy$y_star[-1]),
                               nn=unlist(lapply(yy$y_star, length)), t=t, fitGP1=FALSE,
-                              constant=constant, init = param.init)
+                              constant=constant, init = param.init, ...)
       fit2 <- fit.DNAmf$fit2
       
       if(j > n.burnin){

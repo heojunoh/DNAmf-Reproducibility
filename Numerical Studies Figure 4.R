@@ -32,6 +32,16 @@ pcurrin <- ggplot(data.frame(df.currin.rmse, model), aes(x=model, y=df.currin.rm
         axis.title.y = element_blank(), panel.border = element_blank(),
         text=element_text(size=16), plot.title = element_text(hjust = 0.5, size=20))
 
+df.borehole.rmse <- c(result.borehole.rmse[,1], result.borehole.rmse[,2], result.borehole.rmse[,3], result.borehole.rmse[,5], result.borehole.rmse[,4])
+
+pborehole <- ggplot(data.frame(df.borehole.rmse, model), aes(x=model, y=df.borehole.rmse, fill=model)) + 
+  geom_boxplot(alpha=0.5) + theme_bw() + ggtitle("Borehole") + labs(x="", y = "") +
+  theme(axis.title.x = element_text(margin = margin(t = 10), hjust=0.5),
+        axis.text.x = element_blank(), legend.position="none", 
+        plot.margin = margin(t = 10, r = 10, b = -10, l = 10),
+        axis.title.y = element_blank(), panel.border = element_blank(),
+        text=element_text(size=16), plot.title = element_text(hjust = 0.5, size=20))
+
 ### Numerical Studies CRPS ###
 
 df.tuolinear.crps <- c(result.tuolinear.crps[,1], result.tuolinear.crps[,2], result.tuolinear.crps[,3], result.tuolinear.crps[,5], result.tuolinear.crps[,4])
@@ -64,6 +74,16 @@ pcurrin2 <- ggplot(data.frame(df.currin.crps, model), aes(x=model, y=df.currin.c
         axis.title.y = element_blank(), panel.border = element_blank(),
         text=element_text(size=16), plot.title = element_text(hjust = 0.5, size=20))
 
-figure4 <- ggarrange(padditive, pnonadditive, pcurrin, padditive2, pnonadditive2, pcurrin2, 
-                     ncol=3, nrow=2, common.legend = TRUE, legend="bottom")
+df.borehole.crps <- c(result.borehole.crps[,1], result.borehole.crps[,2], result.borehole.crps[,3], result.borehole.crps[,5], result.borehole.crps[,4])
+
+pborehole2 <- ggplot(data.frame(df.borehole.crps, model), aes(x=model, y=df.borehole.crps, fill=model)) + 
+  geom_boxplot(alpha=0.5) + theme_bw() + labs(x="", y = "") +
+  theme(axis.title.x = element_text(margin = margin(t = 10), hjust=0.5),
+        axis.text.x = element_blank(), legend.position="none", 
+        plot.margin = margin(t = 10, r = 10, b = -10, l = 10),
+        axis.title.y = element_blank(), panel.border = element_blank(),
+        text=element_text(size=16), plot.title = element_text(hjust = 0.5, size=20))
+
+figure4 <- ggarrange(padditive, pnonadditive, pcurrin, pborehole, padditive2, pnonadditive2, pcurrin2, pborehole2,
+                     ncol=4, nrow=2, common.legend = TRUE, legend="bottom")
 

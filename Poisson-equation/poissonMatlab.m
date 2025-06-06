@@ -15,5 +15,14 @@ generateMesh(model,'Hmax',t);
  
 results = solvepde(model);
 
+%u = mean(results.NodalSolution);
 u = max(results.NodalSolution);
+
+%[A,AE] = area(model.Mesh);
+%xyEM = zeros([2, size(results.Mesh.Elements)]);
+%xyEM(:) = results.Mesh.Nodes(:, results.Mesh.Elements);
+%xyEc = squeeze(mean(xyEM, 2));
+%sol_nodes = results.interpolateSolution(xyEc(1,:), xyEc(2,:));
+%u = sum(sol_nodes'.*AE)/sum(AE);
+
 end

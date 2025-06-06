@@ -49,15 +49,15 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
   data_long <- data.frame(
     x = x,
     mu = pred_mu,
-    lower = pred_mu - 2.575829 * sqrt(pred_sig2),
-    upper = pred_mu + 2.575829 * sqrt(pred_sig2),
+    lower = pred_mu - qnorm(0.995) * sqrt(pred_sig2),
+    upper = pred_mu + qnorm(0.995) * sqrt(pred_sig2),
     group = factor(i)
   )
   
   facet_labels <- setNames(paste0("Mesh size = ", mesh_size), as.character(i))
   
   p <- ggplot() +
-    geom_line(data = data_long, aes(x = x, y = mu), size = 1, color = scales::hue_pal()(6)[5]) +
+    geom_line(data = data_long, aes(x = x, y = mu), linewidth = 1, color = scales::hue_pal()(6)[5]) +
     geom_ribbon(data = data_long, aes(x = x, ymin = lower, ymax = upper), alpha = 0.2, fill = scales::hue_pal()(6)[5]) +
     facet_wrap(~group, scales = "free_y", nrow = 1, labeller = as_labeller(facet_labels), strip.position = "top") +
     ylim(-yylim, yylim) + theme_minimal() + theme_bw() +
