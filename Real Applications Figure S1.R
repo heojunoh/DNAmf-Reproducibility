@@ -131,11 +131,14 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
           strip.text.x = element_text(size = 12, margin = margin(t = 5, b = 5)),
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           axis.text.x = element_blank(), axis.text.y = element_blank()) +
-    labs(y = NULL) +
-    geom_function(fun = function(x) heat(x, mesh_size),
-                  inherit.aes = FALSE,
-                  color = "black", linetype = "dashed", size = 1,
-                  data = data.frame(group = factor(i)))
+    labs(y = NULL) 
+  
+  if (mesh_size == 0) {
+    p <- p + geom_function(fun = function(x) heat(x, mesh_size),
+                           inherit.aes = FALSE,
+                           color = "black", linetype = "dashed", size = 1,
+                           data = data.frame(group = factor(i)))
+  }
   
   if (add_points && !is.null(X_points) && !is.null(y_points)) {
     data_points <- data.frame(x = X_points, y = y_points, group = factor(i))

@@ -33,23 +33,11 @@ y5 <- fl(X5, t=m5)
 
 fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
-X_list_2 <- fit.DNAmf.sqex$XX$X_tilde
-y_list_2 <- fit.DNAmf.sqex$yy$y_tilde
-
-
-fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
-                             nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
-X_list_3 <- fit.DNAmf.sqex$XX$X_tilde
-y_list_3 <- fit.DNAmf.sqex$yy$y_tilde
-
-
-fit.DNAmf.sqex <- DNAmf.sqex(X1, y1, X=rbind(X2, X3, X4, X5), y=rbind(y2, y3, y4, y5),
-                             nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE)
-X_list_5 <- fit.DNAmf.sqex$XX$X_tilde
-y_list_5 <- fit.DNAmf.sqex$yy$y_tilde
+                             t=c(m1,m2,m3,m4,m5), multi.start=10, n.iter=100, constant=TRUE, save.iter=TRUE)
+X_list <- fit.DNAmf.sqex$XX$X_tilde
+y_list_1 <- fit.DNAmf.sqex$yy_saved[[1]]$y_tilde
+y_list_2 <- fit.DNAmf.sqex$yy_saved[[2]]$y_tilde
+y_list_3 <- fit.DNAmf.sqex$yy_saved[[3]]$y_tilde
 
 ### --- Build df_points (Original + Pseudo outputs) --- ###
 make_pseudo_df <- function(X_list, y_list, label) {
@@ -77,12 +65,12 @@ df_points_Original <- data.frame(
   type = "Original"
 )
 
-df_points_pseudo1 <- make_pseudo_df(X_list_2, y_list_2, "Iteration 1")
-df_points_pseudo2 <- make_pseudo_df(X_list_3, y_list_3, "Iteration 2")
-df_points_pseudo3 <- make_pseudo_df(X_list_5, y_list_5, "Iteration 3")
+df_points_pseudo1 <- make_pseudo_df(X_list, y_list_1, "Iteration 1")
+df_points_pseudo2 <- make_pseudo_df(X_list, y_list_2, "Iteration 50")
+df_points_pseudo3 <- make_pseudo_df(X_list, y_list_3, "Iteration 100")
 
 df_points <- rbind(df_points_Original, df_points_pseudo1, df_points_pseudo2, df_points_pseudo3)
-df_points$type <- factor(df_points$type, levels = c("Original", "Iteration 1", "Iteration 2", "Iteration 3"))
+df_points$type <- factor(df_points$type, levels = c("Original", "Iteration 1", "Iteration 50", "Iteration 100"))
 
 ### --- Build curve_df --- ###
 curve_df <- data.frame(
@@ -112,14 +100,14 @@ make_panel <- function(i, show_legend = FALSE) {
     scale_color_manual(values = c(
       "Original" = "red",
       "Iteration 1" = "green",
-      "Iteration 2" = "blue",
-      "Iteration 3" = "purple"
+      "Iteration 50" = "blue",
+      "Iteration 100" = "purple"
     )) +
     scale_shape_manual(values = c(
       "Original" = 16,
       "Iteration 1" = 0,
-      "Iteration 2" = 2,
-      "Iteration 3" = 5
+      "Iteration 50" = 2,
+      "Iteration 100" = 5
     )) +
     facet_wrap(
       ~level, nrow = 1, scales = "free_y",

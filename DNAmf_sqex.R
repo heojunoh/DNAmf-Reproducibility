@@ -29,7 +29,7 @@ DNAmf.sqex <- function(X1, y1, X, y, nn, t, constant = TRUE, init=NULL, n.iter=5
 }
 
 DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = TRUE, fitGP1 = TRUE, init=NULL, 
-                       multi.start = 1, n.iter = 500, trace = TRUE, g = sqrt(.Machine$double.eps), burn.ratio = 0.75, ...) {
+                       multi.start = 1, n.iter = 500, trace = TRUE, g = sqrt(.Machine$double.eps), burn.ratio = 0.75, save.iter=FALSE, ...) {
   time0 <- proc.time()[3]
   
   if (nested) { # Nested
@@ -99,11 +99,20 @@ DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = 
     fit2 <- fit.DNAmf$fit2
     print(c(fit2$theta_x, fit2$theta_t, fit2$beta, fit2$delta, fit2$mu.hat, fit2$tau2hat))
     
+    if (save.iter) {
+      iter.index <- c(1, 50, 100)
+      yy_saved <- list()
+    }
+    
     for (j in 1:n.iter) { # Imputation and Maximization
       if (trace) cat(j, '\n')
       
       # Imputation step; impute y tilde using ESS
       yy <- imputer(XX, yy, t, pred1, fit2)
+      if (save.iter && j %in% iter.index) {
+        idx <- which(iter.index == j)
+        yy_saved[[idx]] <- yy
+      }
       
       param.init <- c(fit2$theta_x, fit2$theta_t, fit2$beta, fit2$delta)
       # Maximization step; optimize parameters n.iter times
@@ -133,6 +142,7 @@ DNAmf_sqex <- function(X1, y1, X_list, y_list, t, nn, nested = TRUE, constant = 
     model$fit2$delta <- final_params[d+4]
     model$fit2$mu.hat <- final_params[d+5]
     model$fit2$tau2hat <- final_params[d+6]
+    if(save.iter) model$yy_saved <- yy_saved
     
     model$XX <- XX
     model$yy <- yy
