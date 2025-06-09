@@ -6,7 +6,7 @@ fl <- function(x, t){
 }
 ### training data ###
 n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1;
-m1 <- 2.5; m2 <- 2; m3 <- 1.5; m4 <- 1; m5 <- 0.5; 
+m1 <- 2.5; m2 <- 2; m3 <- 1.5; m4 <- 1; m5 <- 0.5;
 
 set.seed(4) # 4, 23
 N <- n1+n2+n3+n4+n5
@@ -15,16 +15,16 @@ idx <- sample(1:N, n1, replace = FALSE)
 X1 <- X_star[idx,,drop=FALSE]
 X_star <- X_star[-idx,,drop=FALSE]; N <- N - n1
 idx <- sample(1:N, n2, replace = FALSE)
-X2 <- X_star[idx,,drop=FALSE] 
+X2 <- X_star[idx,,drop=FALSE]
 X_star <- X_star[-idx,,drop=FALSE]; N <- N - n2
 idx <- sample(1:N, n3, replace = FALSE)
-X3 <- X_star[idx,,drop=FALSE] 
+X3 <- X_star[idx,,drop=FALSE]
 X_star <- X_star[-idx,,drop=FALSE]; N <- N - n3
 idx <- sample(1:N, n4, replace = FALSE)
-X4 <- X_star[idx,,drop=FALSE] 
+X4 <- X_star[idx,,drop=FALSE]
 X_star <- X_star[-idx,,drop=FALSE]; N <- N - n4
 idx <- sample(1:N, n5, replace = FALSE)
-X5 <- X_star[idx,,drop=FALSE] 
+X5 <- X_star[idx,,drop=FALSE]
 y1 <- fl(X1, t=m1)
 y2 <- fl(X2, t=m2)
 y3 <- fl(X3, t=m3)
@@ -41,7 +41,7 @@ y_list_3 <- fit.DNAmf.sqex$yy_saved[[3]]$y_tilde
 
 ### --- Build df_points (Original + Pseudo outputs) --- ###
 make_pseudo_df <- function(X_list, y_list, label) {
-  df_list <- lapply(1:4, function(i) {
+  df_list <- lapply(1:5, function(i) {
     xi <- X_list[[i]]
     yi <- y_list[[i]]
     if (length(xi) > 0 && length(yi) > 0 && length(xi) == length(yi)) {
@@ -59,9 +59,9 @@ make_pseudo_df <- function(X_list, y_list, label) {
 }
 
 df_points_Original <- data.frame(
-  x = c(X1, X2, X3, X4),
-  y = c(y1, y2, y3, y4),
-  level = factor(rep(1:4, times = c(length(X1), length(X2), length(X3), length(X4)))),
+  x = c(X1, X2, X3, X4, X5),
+  y = c(y1, y2, y3, y4, y5),
+  level = factor(rep(1:5, times = c(length(X1), length(X2), length(X3), length(X4), length(X5)))),
   type = "Original"
 )
 
@@ -73,10 +73,11 @@ df_points <- rbind(df_points_Original, df_points_pseudo1, df_points_pseudo2, df_
 df_points$type <- factor(df_points$type, levels = c("Original", "Iteration 1", "Iteration 50", "Iteration 100"))
 
 ### --- Build curve_df --- ###
+x <- seq(0,1,0.01)
 curve_df <- data.frame(
-  x = rep(x, 4),
-  y = c(fl(x, t=m1),fl(x, t=m2),fl(x, t=m3),fl(x, t=m4)),
-  level = factor(rep(1:4, each = length(x)))
+  x = rep(x, 5),
+  y = c(fl(x, t=m1),fl(x, t=m2),fl(x, t=m3),fl(x, t=m4),fl(x, t=m5)),
+  level = factor(rep(1:5, each = length(x)))
 )
 
 ### --- Create mesh_labels --- ###
@@ -84,7 +85,8 @@ mesh_labels <- c(
   "1" = paste0("Mesh size = ", m1),
   "2" = paste0("Mesh size = ", m2),
   "3" = paste0("Mesh size = ", m3),
-  "4" = paste0("Mesh size = ", m4)
+  "4" = paste0("Mesh size = ", m4),
+  "5" = paste0("Mesh size = ", m5)
 )
 
 ### --- Plotting --- ###
@@ -93,7 +95,7 @@ levels <- levels(df_points$level)
 make_panel <- function(i, show_legend = FALSE) {
   pts   <- df_points[df_points$level == i, ]
   curve <- curve_df[curve_df$level == i, ]
-  
+
   ggplot() +
     geom_point(data = pts, aes(x = x, y = y, color = type, shape = type), size = 3, stroke = 0.8) +
     geom_line(data = curve, aes(x = x, y = y), linewidth = 1, linetype = "dashed", color = "black") +
