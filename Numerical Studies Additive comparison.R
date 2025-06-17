@@ -49,10 +49,10 @@ for(i in 1:rep) {
   delta <- c(delta, fit.DNAmf.sqex$fit2$delta)
   
   ### RNAmf ###
-  fit.RNAmf <- RNAmf_three_level(X2, y2, X3, y3, X4, y4, kernel="sqex", constant=TRUE)
+  fit.RNAmf <- RNAmf(list(X2, X3, X4), list(y2, y3, y4), kernel="sqex", constant=TRUE)
   pred.RNAmf <- predict(fit.RNAmf, x)
-  predy.RNAmf <- pred.RNAmf$mu
-  predsig2.RNAmf <- pred.RNAmf$sig2
+  predy.RNAmf <- pred.RNAmf$mu[[3]]
+  predsig2.RNAmf <- pred.RNAmf$sig2[[3]]
   
   ### Fractional Brownian motion ###
   fit.fbm <- MuFiMeshGP(rbind(X1, X2, X3, X4, X5), 
