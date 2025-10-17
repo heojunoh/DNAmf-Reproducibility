@@ -165,7 +165,7 @@ figure6
 
 <img src="figure/Figure 6.png" style="display: block; margin: auto;"/>
 
-##### Reproducing Figure S1
+##### Reproducing Figure S5
 
 This reproduces the illustrations of Poisson's equation (top row) and the heat equation (bottom row).
 
