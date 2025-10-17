@@ -171,8 +171,8 @@ This reproduces the illustrations of Poisson's equation (top row) and the heat e
 
 ``` r
 # Run code
-source("Real Applications Figure S1.R")
-figureS1
+source("Real Applications Figure S5.R")
+figureS5
 ```
 
 <img src="figure/Figure S5.png" style="display: block; margin: auto;"/>
