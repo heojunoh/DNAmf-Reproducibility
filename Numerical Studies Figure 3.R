@@ -9,7 +9,7 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
     group = factor(i)
   )
   
-  facet_labels <- setNames(paste0("Mesh size = ", mesh_size), as.character(i))
+  facet_labels <- setNames(paste0("Mesh size = ", round(mesh_size, digits=3)), as.character(i))
   
   p <- ggplot() +
     geom_line(data = data_long, aes(x = x, y = mu), linewidth = 1, color = scales::hue_pal()(6)[5]) +
@@ -24,7 +24,7 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
     labs(y = NULL) +
     geom_function(fun = function(x) fl(x, mesh_size),
                   inherit.aes = FALSE,
-                  color = "black", linetype = "dashed", size = 1,
+                  color = "black", linetype = "dashed", linewidth = 1,
                   data = data.frame(group = factor(i)))
   
   if (add_points && !is.null(X_points) && !is.null(y_points)) {
@@ -42,13 +42,18 @@ fl <- function(x, t){
   term1 + term2
 }
 ### training data ###
-n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1; 
-m1 <- 3.0; m2 <- 2.5; m3 <- 2.0; m4 <- 1.5; m5 <- 1.0;
+# n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1; 
+# m1 <- 3.0; m2 <- 2.5; m3 <- 2.0; m4 <- 1.5; m5 <- 1.0;
+
+c <- 0.7; bet <- -2
+n5 <- 1; n4 <- round(c^bet*n5); n3 <- round(c^(2*bet)*n5); n2 <- round(c^(3*bet)*n5); n1 <- round(c^(4*bet)*n5);
+
+m1 <- 2.5; m2 <- m1*c; m3 <- m2*c; m4 <- m3*c; m5 <- m4*c;
 d <- 1
 eps <- sqrt(.Machine$double.eps)
 x <- seq(0,1,0.01)
 
-set.seed(2)
+set.seed(3)
 NestDesign <- NestedX(c(n1,n2,n3,n4,n5),d)
 X1 <- NestDesign[[1]]
 X2 <- NestDesign[[2]]
@@ -98,9 +103,14 @@ fl <- function(x, t){
   term1 + term2
 }
 ### training data ###
-m1 <- 2.5; m2 <- 2.0; m3 <- 1.5; m4 <- 1.0; m5 <- 0.5;
+# m1 <- 2.5; m2 <- 2.0; m3 <- 1.5; m4 <- 1.0; m5 <- 0.5;
 
-set.seed(11)
+c <- 0.7; bet <- -2
+n5 <- 1; n4 <- round(c^bet*n5); n3 <- round(c^(2*bet)*n5); n2 <- round(c^(3*bet)*n5); n1 <- round(c^(4*bet)*n5);
+
+m1 <- 2.5; m2 <- m1*c; m3 <- m2*c; m4 <- m3*c; m5 <- m4*c;
+
+set.seed(81)
 NestDesign <- NestedX(c(n1,n2,n3,n4,n5),d)
 X1 <- NestDesign[[1]]
 X2 <- NestDesign[[2]]
@@ -144,4 +154,3 @@ secondrow <- annotate_figure(ggarrange(plotlist = plots, ncol = 6, nrow = 1) + y
 
 # Combine with firstrow
 figure3 <- ggarrange(firstrow, secondrow, nrow = 2)
-
