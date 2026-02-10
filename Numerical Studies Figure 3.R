@@ -8,9 +8,9 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
     upper = pred_mu + qnorm(0.995) * sqrt(pred_sig2),
     group = factor(i)
   )
-  
+
   facet_labels <- setNames(paste0("Mesh size = ", round(mesh_size, digits=3)), as.character(i))
-  
+
   p <- ggplot() +
     geom_line(data = data_long, aes(x = x, y = mu), linewidth = 1, color = scales::hue_pal()(6)[5]) +
     geom_ribbon(data = data_long, aes(x = x, ymin = lower, ymax = upper), alpha = 0.2, fill = scales::hue_pal()(6)[5]) +
@@ -26,12 +26,12 @@ create_plot <- function(i, mesh_size, x, pred_mu, pred_sig2, X_points = NULL, y_
                   inherit.aes = FALSE,
                   color = "black", linetype = "dashed", linewidth = 1,
                   data = data.frame(group = factor(i)))
-  
+
   if (add_points && !is.null(X_points) && !is.null(y_points)) {
     data_points <- data.frame(x = X_points, y = y_points, group = factor(i))
     p <- p + geom_point(data = data_points, aes(x = x, y = y), color = "red", shape = 16, size = 2.1)
   }
-  
+
   return(p)
 }
 
@@ -42,7 +42,7 @@ fl <- function(x, t){
   term1 + term2
 }
 ### training data ###
-# n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1; 
+# n1 <- 13; n2 <- 10; n3 <- 7; n4 <- 4; n5 <- 1;
 # m1 <- 3.0; m2 <- 2.5; m3 <- 2.0; m4 <- 1.5; m5 <- 1.0;
 
 c <- 0.7; bet <- -2
@@ -72,7 +72,7 @@ fit.DNAmf.sqex <- DNAmf.sqex(X1, y1,
                              X=rbind(X2, X3, X4, X5),
                              y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, 
+                             t=c(m1,m2,m3,m4,m5), multi.start=10,
                              constant=TRUE)
 pred.DNAmf <- predict.DNAmf(fit.DNAmf.sqex, x, targett=0)
 predydiffu.sqex <- pred.DNAmf$mu
@@ -129,7 +129,7 @@ fit.DNAmf.sqex <- DNAmf.sqex(X1, y1,
                              X=rbind(X2, X3, X4, X5),
                              y=rbind(y2, y3, y4, y5),
                              nn=c(length(y1),length(y2),length(y3),length(y4),length(y5)),
-                             t=c(m1,m2,m3,m4,m5), multi.start=10, 
+                             t=c(m1,m2,m3,m4,m5), multi.start=10,
                              constant=TRUE)
 pred.DNAmf <- predict.DNAmf(fit.DNAmf.sqex, x, targett=0)
 predydiffu.sqex <- pred.DNAmf$mu
@@ -153,4 +153,4 @@ secondrow <- annotate_figure(ggarrange(plotlist = plots, ncol = 6, nrow = 1) + y
                              left = text_grob("y", rot = 90, size = 10))
 
 # Combine with firstrow
-figure3 <- ggarrange(firstrow, secondrow, nrow = 2)
+figure_illustration <- ggarrange(firstrow, secondrow, nrow = 2)

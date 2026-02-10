@@ -6,8 +6,8 @@ This instruction aims to reproduce the results in the paper "*Diffusion Non-Addi
 
 The following results are reproduced in this file
 
--   Section 4: Figure 3, 4, S1, S2, S3, and S4
--   Section 5: Figure 6 and S5
+-   Section 4: Figure 3, 4, S1, S2, S3, S4, S5, and S6
+-   Section 5: Figure 6 and S7
 -   Section 6: Figure 7 and 8
 
 The approximate running times for each section are as follows:
@@ -44,7 +44,6 @@ library(RNAmf)
 library(matlabr)
 library(ggplot2)
 library(ggpubr)
-library(hrbrthemes)
 library(ReacTran)
 library(deSolve)
 
@@ -68,23 +67,46 @@ if(NARGP){
 
 ## Section 4:
 
-##### Reproducing Figure 3
+##### Reproducing Figure 3, S1, ans S2
 
 This reproduces the illustrations of the additive function (top row) and the non-additive function (bottom row).
 
 ``` r
-# Run code
+# Figure 3
 source("Numerical Studies Figure 3.R")
-figure3
+figure_illustration
 ```
 
 <img src="figure/Figure 3.png" style="display: block; margin: auto;"/>
 
-##### Reproducing Figure 4, S1, S2, S3, and S4
-
-This reproduces the boxplot results for Section 4.
+This reproduces the illustrations of the additive function (top row) and the non-additive function (bottom row) with delta = 0.
 
 ``` r
+# Figure S1
+source("GP_nonsep_delta_0.R")
+source("Numerical Studies Figure 3.R")
+figure_illustration
+```
+
+<img src="figure/Figure S1.png" style="display: block; margin: auto;"/>
+
+This reproduces the illustrations of the additive function (top row) and the non-additive function (bottom row) with delta = 2.
+
+``` r
+# Figure S2
+source("GP_nonsep_delta_2.R")
+source("Numerical Studies Figure 3.R")
+figure_illustration
+```
+
+<img src="figure/Figure S2.png" style="display: block; margin: auto;"/>
+
+##### Reproducing Figure 4, S3, S4, S5, and S6
+
+This reproduces the boxplot results for Section 4 Numerical Studies.
+
+``` r
+source("GP_nonsep.R")
 # Figure 4
 c <- 0.7; gam <- -2
 source("Numerical Studies Additive comparison.R")
@@ -97,35 +119,11 @@ figure_numerical
 
 <img src="figure/Figure 4.png" style="display: block; margin: auto;"/>
 
-``` r
-# Figure S1
-c <- 0.75; gam <- -2
-source("Numerical Studies Additive comparison.R")
-source("Numerical Studies Non-additive comparison.R")
-source("Numerical Studies Currin comparison.R")
-source("Numerical Studies Borehole comparison.R")
-source("Numerical Studies Figure 4.R")
-figure_numerical
-```
-
-<img src="figure/Figure S1.png" style="display: block; margin: auto;"/>
-
-``` r
-# Figure S2
-c <- 0.5; gam <- -1
-source("Numerical Studies Additive comparison.R")
-source("Numerical Studies Non-additive comparison.R")
-source("Numerical Studies Currin comparison.R")
-source("Numerical Studies Borehole comparison.R")
-source("Numerical Studies Figure 4.R")
-figure_numerical
-```
-
-<img src="figure/Figure S2.png" style="display: block; margin: auto;"/>
+This reproduces the boxplot results for Supplementary Materials with c = 0.75 and gamma = 2.
 
 ``` r
 # Figure S3
-c <- 2/3; gam <- -1.5
+c <- 0.75; gam <- -2
 source("Numerical Studies Additive comparison.R")
 source("Numerical Studies Non-additive comparison.R")
 source("Numerical Studies Currin comparison.R")
@@ -136,9 +134,11 @@ figure_numerical
 
 <img src="figure/Figure S3.png" style="display: block; margin: auto;"/>
 
+This reproduces the boxplot results for Supplementary Materials with c = 0.5 and gamma = 1.
+
 ``` r
 # Figure S4
-c <- 0.55; gam <- -1
+c <- 0.5; gam <- -1
 source("Numerical Studies Additive comparison.R")
 source("Numerical Studies Non-additive comparison.R")
 source("Numerical Studies Currin comparison.R")
@@ -148,6 +148,36 @@ figure_numerical
 ```
 
 <img src="figure/Figure S4.png" style="display: block; margin: auto;"/>
+
+This reproduces the boxplot results for Supplementary Materials with c = 2/3 and gamma = 1.5.
+
+``` r
+# Figure S5
+c <- 2/3; gam <- -1.5
+source("Numerical Studies Additive comparison.R")
+source("Numerical Studies Non-additive comparison.R")
+source("Numerical Studies Currin comparison.R")
+source("Numerical Studies Borehole comparison.R")
+source("Numerical Studies Figure 4.R")
+figure_numerical
+```
+
+<img src="figure/Figure S5.png" style="display: block; margin: auto;"/>
+
+This reproduces the boxplot results for Supplementary Materials with c = 0.55 and gamma = 1.
+
+``` r
+# Figure S6
+c <- 0.55; gam <- -1
+source("Numerical Studies Additive comparison.R")
+source("Numerical Studies Non-additive comparison.R")
+source("Numerical Studies Currin comparison.R")
+source("Numerical Studies Borehole comparison.R")
+source("Numerical Studies Figure 4.R")
+figure_numerical
+```
+
+<img src="figure/Figure S6.png" style="display: block; margin: auto;"/>
 
 ## Section 5
 
@@ -165,17 +195,17 @@ figure6
 
 <img src="figure/Figure 6.png" style="display: block; margin: auto;"/>
 
-##### Reproducing Figure S5
+##### Reproducing Figure S7
 
 This reproduces the illustrations of Poisson's equation (top row) and the heat equation (bottom row).
 
 ``` r
 # Run code
-source("Real Applications Figure S5.R")
+source("Real Applications Figure S7.R")
 figureS5
 ```
 
-<img src="figure/Figure S5.png" style="display: block; margin: auto;"/>
+<img src="figure/Figure S7.png" style="display: block; margin: auto;"/>
 
 ## Section 6
 
